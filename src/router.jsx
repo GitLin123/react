@@ -3,8 +3,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from './layout/MainLayout';
 import HomePage from './pages/Home';
 import AboutPage from './pages/About';
-import BackRemove from './pages/BackRemove'
-
+import BackRemove from './pages/BackRemove';
+import Upscale from './pages/Upscale';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -21,7 +21,11 @@ const router = createBrowserRouter([
       {
         path: '/back',
         element: <BackRemove />
-      }
+      },
+      {
+        path: '/upscale',
+        element: <Upscale />
+      },
     ]
   }
 ]);

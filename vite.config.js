@@ -1,13 +1,24 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import wasm from 'vite-plugin-wasm';
+import topLevelAwait from 'vite-plugin-top-level-await';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    headers: {
-      "Cross-Origin-Opener-Policy": "same-origin",
-      "Cross-Origin-Embedder-Policy": "require-corp"
+  plugins: [
+    react(),
+    wasm(),
+    topLevelAwait()
+  ],
+  build: {
+    commonjsOptions: {
+      include: [/onnxruntime-web/, /node_modules/] // 强制包含CJS模块
     }
+  },
+  optimizeDeps: {
+    include: [  // 显式包含所有必要依赖
+    ]
+  },
+  server: {
+
   }
-})
+});
