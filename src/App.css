@@ -1,0 +1,20 @@
+  .ant-card {
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-4px);
+      
+      .ant-card-body > div:first-child {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      
+      .ant-card-body > div:last-child {
+        opacity: 1;
+      }
+      
+      h3 {
+        transform: translateY(0) scale(1.3) !important;
+      }
+    }
+  }
