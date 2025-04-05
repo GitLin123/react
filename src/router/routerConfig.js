@@ -3,7 +3,8 @@ const ROUTE_PATH_TO_NAME = {
     '/back':'图片背景去除',
     '/ai':'AI生图',
     '/edit':'图片编辑',
-    '/upscale':'图片超分辨率'
+    '/upscale':'图片超分辨率',
+    '/login':'登录/注册'
 }
 
 export  default ROUTE_PATH_TO_NAME;

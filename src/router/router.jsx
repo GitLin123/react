@@ -7,6 +7,8 @@ import BackRemove from '../pages/remove_back/BackRemove';
 import Upscale from '../pages/upscale/Upscale';
 import AIForPicture from '../pages/ai_picture/AiForPicture';
 import PictureEditor from '../pages/edit/PitureEditor';
+import  Login  from '../pages/login/Login';
+import MyInfo from '../pages/my/MyInfo';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
         path: '/edit',
         element: <PictureEditor />,
       },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/my', //我的个人页面，没有登陆跳转到登陆界面
+        element: <MyInfo />
+      }
     ],
   }
 ]);

@@ -1,19 +1,21 @@
 // src/layouts/MainLayout.tsx
-import { Layout } from 'antd';
+import { Layout, Avatar } from 'antd';
 import React,{useState} from 'react';
 import TopBar from './TopBar';
 import Foot from './Footer';
 import {Outlet, useLocation} from 'react-router-dom';
 import { Drawer } from "antd";
-import { BarsOutlined} from '@ant-design/icons';
+import { BarsOutlined, UserOutlined} from '@ant-design/icons';
 import { useEffect, useRef } from 'react';
 import LoadingBar from 'react-top-loading-bar';
 import ROUTE_PATH_TO_NAME from '../router/routerConfig';
+import store from '../store/index.js';
 const { Header, Content, Footer } = Layout;
 const MainLayout = () => {
   const [open, setOpen] = useState(false);
   const loadingBarRef = useRef(null);
   const location = useLocation();
+  const [avatar, setAvatar] = useState(store.getState().avatar);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -32,6 +34,22 @@ const MainLayout = () => {
 
     return () => clearTimeout(timer);
   }, [location.pathname]);
+
+
+
+  // 手动订阅 Store 更新
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      // 当 Store 更新时，获取最新头像
+      const newAvatar = store.getState().avatar;
+      if (newAvatar !== avatar) {
+        setAvatar(newAvatar);
+      }
+    });
+    
+    // 组件卸载时取消订阅
+    return () => unsubscribe();
+  }, [avatar]);
 
   // 滚动条容器样式
   const contentStyle = {
@@ -78,6 +96,11 @@ const MainLayout = () => {
       <Header style={headStyle}>
       <BarsOutlined style={{fontSize :28}} onClick={showDrawer}></BarsOutlined>
         <h3>{ROUTE_PATH_TO_NAME[location.pathname]}</h3>
+        <Avatar
+        src={avatar||null}
+        shape='square'
+        size={48} icon={<UserOutlined />}
+        ></Avatar>
         <Drawer onClose={() => onClose()} open={open} placement='left'>
           <TopBar onClose={() => onClose()} ></TopBar>
         </Drawer>

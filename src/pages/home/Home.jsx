@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { TextPlugin } from "gsap/TextPlugin";
 import Cards from '../../components/card/Cards';
 import UpscaleIntro from '../../components/intro_part/UpscaleIntro';
+import BackRemoveIntro from '../../components/intro_part/BackRemoveIntro';
 const Home = () => {
   // 注册文本插件
 gsap.registerPlugin(TextPlugin);
@@ -93,6 +94,10 @@ gsap.registerPlugin(TextPlugin);
 
     {/* 超分辨率的展示和介绍 */}
     <UpscaleIntro></UpscaleIntro>
+
+    {/* 背景去除的展示和介绍 */}
+
+    <BackRemoveIntro></BackRemoveIntro>
     </>
   );
 };
