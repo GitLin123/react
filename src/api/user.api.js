@@ -1,13 +1,15 @@
 import http from "../utils/axios";
 
 // RESTful风格API路径定义
-export const API = {
-  GET_USERS: '/users',
-  CREATE_USER: '/sign', 
-  DELETE_USER: (id) => `/delete/${id}`,
-  GET_USER_BY_ID: (id) => `/users/${id}`,
-  SEARCH_USER_BY_NAME: (username) => `/${username}`,
-  USER_LOGIN: '/login'
+export const USER_API = {
+  GET_USERS: '/user',
+  CREATE_USER: '/user/sign', 
+  DELETE_USER: (id) => `/user/delete/${id}`,
+  GET_USER_BY_ID: (id) => `/user/${id}`,
+  SEARCH_USER_BY_NAME: (username) => `/name/${username}`,
+  USER_LOGIN: '/user/login',
+  GET_USERIMAGES:(id) =>  `/user/images/${id}`,
+  ADD_USERIMAGES: '/user/add_image'
 }
 
 /**
@@ -15,7 +17,7 @@ export const API = {
  * @returns {Promise<Array<{id: number, username: string, email: string}>>} 用户列表（不含敏感信息）
  */
 export const getUsers = () => {
-  return http.get(API.GET_USERS);
+  return http.get(USER_API.GET_USERS);
 }
 
 /**
@@ -27,7 +29,7 @@ export const getUsers = () => {
  * @returns {Promise<{id: number, username: string, email: string}>} 新用户数据（不含密码）
  */
 export const createUser = (userData) => {
-  return http.post(API.CREATE_USER, userData);
+  return http.post(USER_API.CREATE_USER, userData);
 };
 
 /**
@@ -36,7 +38,7 @@ export const createUser = (userData) => {
  * @returns {Promise<{status: string, deletedId: number}>} 删除结果
  */
 export const deleteUser = (id) => {
-  return http.delete(API.DELETE_USER(id));
+  return http.delete(USER_API.DELETE_USER(id));
 }
 
 /**
@@ -45,7 +47,7 @@ export const deleteUser = (id) => {
  * @returns {Promise<object>} 用户详细信息
  */
 export const getUserById = (id) => {
-  return http.get(API.GET_USER_BY_ID(id));
+  return http.get(USER_API.GET_USER_BY_ID(id));
 }
 
 /**
@@ -54,7 +56,7 @@ export const getUserById = (id) => {
  * @returns {Promise<object>} 匹配的用户列表
  */
 export const searchUserByName = (username) => {
-  return http.get(API.SEARCH_USER_BY_NAME(username));
+  return http.get(USER_API.SEARCH_USER_BY_NAME(username));
 }
 
 /**
@@ -67,5 +69,26 @@ export const searchUserByName = (username) => {
  * */
 
 export const userLogin = (userLoginInfo) => {
-    return http.post(API.USER_LOGIN,userLoginInfo)
+    return http.post(USER_API.USER_LOGIN,userLoginInfo)
+}
+
+/**
+ * 获取用户图库
+ * @returns {Promise<Array<{id: number, imageUrl: string}>>} 用户图库列表
+*/
+
+export const getUserImage = (id) => {
+  return http.get(USER_API.GET_USERIMAGES(id));
+}
+
+// data: { userId, imageUrl }
+/**
+ * 添加用户图库
+ * @param {Object} data - 用户图库信息
+ * @param {number} data.userId - 用户ID
+ * @param {string} data.imageUrl - 图片URL
+ * @returns {Promise<{status: string}>} 添加结果
+ */
+export const addUserImage = (data) => {
+  return http.post(USER_API.ADD_USERIMAGES,data);
 }

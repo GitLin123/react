@@ -5,10 +5,13 @@ import HomePage from '../pages/home/Home';
 import AboutPage from '../pages/our/About';
 import BackRemove from '../pages/remove_back/BackRemove';
 import Upscale from '../pages/upscale/Upscale';
-import AIForPicture from '../pages/ai_picture/AiForPicture';
 import PictureEditor from '../pages/edit/PitureEditor';
 import  Login  from '../pages/login/Login';
 import MyInfo from '../pages/my/MyInfo';
+import NotFound from '../pages/404/NotFound';
+import Independent from '../pages/ai_picture/AIForPicture';
+import EditDemo from '../pages/edit/EditDemo';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -32,11 +35,15 @@ const router = createBrowserRouter([
       },
       {
         path: '/ai',
-        element: <AIForPicture />
+        element: <Independent />
       },
       {
         path: '/edit',
         element: <PictureEditor />,
+      },
+      {
+        path: '/edit1',
+        element: <EditDemo />,
       },
       {
         path: '/login',
@@ -44,7 +51,21 @@ const router = createBrowserRouter([
       },
       {
         path: '/my', //我的个人页面，没有登陆跳转到登陆界面
-        element: <MyInfo />
+        element: <MyInfo />,
+        // children: [
+        //   {
+        //     path: '/my', //个人信息
+        //     element: <MyInfo />
+        //   },
+        //   {
+        //     path: '/setting',  //个人信息
+        //     element: <Setting />
+        //   }
+        // ]
+      },
+      {
+        path:'*',
+        element:<NotFound />
       }
     ],
   }

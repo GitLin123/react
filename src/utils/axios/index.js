@@ -27,9 +27,11 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response) => response.data, // 直接返回数据部分
   (error) => {
-    // 统一错误处理
-    const message = error.response?.data?.error || '请求失败';
-    return Promise.reject(message);
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
   }
 );
 

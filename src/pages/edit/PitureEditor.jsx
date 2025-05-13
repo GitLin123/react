@@ -94,7 +94,7 @@ const PictureEditor = () => {
     } else {
       filters.push(filter);
     }
-    
+  
     activeObject.applyFilters();
     canvas.renderAll();
   };
@@ -120,6 +120,7 @@ const PictureEditor = () => {
       quality: 0.8
     });
     link.click();
+    link.remove('a');
   };
 
   return (
@@ -164,7 +165,46 @@ const PictureEditor = () => {
       </div>
 
       <canvas ref={canvasRef} />
+      <div className="toolbar">
+        <label className="upload-btn">
+          上传图片
+          <input 
+            type="file" 
+            accept="image/*" 
+            onChange={handleImageUpload} 
+            style={{ display: 'none' }}
+          />
+        </label>
+        
+        <button onClick={addText}>添加文字</button>
+        <button onClick={() => canvas?.getActiveObject() && canvas.remove(canvas.getActiveObject())}>
+          删除选中
+        </button>
+        
+        <div className="filter-group">
+          <button onClick={() => applyFilter('grayscale')}>灰度</button>
+          <button onClick={() => applyFilter('invert')}>反色</button>
+        </div>
+
+        <div className="history-controls">
+          <button 
+            disabled={currentStep <= 0}
+            onClick={() => handleUndoRedo(currentStep - 1)}
+          >
+            撤销
+          </button>
+          <button 
+            disabled={currentStep >= history.length - 1}
+            onClick={() => handleUndoRedo(currentStep + 1)}
+          >
+            重做
+          </button>
+        </div>
+
+        <button onClick={exportImage}>导出图片</button>
+      </div>
     </div>
+    
   );
 };
 
@@ -172,7 +212,7 @@ const PictureEditor = () => {
 const styles = `
   .editor-container {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     padding: 20px;
     background: #f0f2f5;
   }
